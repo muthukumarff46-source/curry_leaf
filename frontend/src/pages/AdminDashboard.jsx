@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { productApi } from '../api/productApi';
+import { getImageUrl } from '../utils/imageUrl';
 import { orderApi } from '../api/orderApi';
 import { Plus, Edit, Trash2, Package, ShoppingBag, CheckCircle, Clock, Truck, XCircle, Loader2 } from 'lucide-react';
 
@@ -90,7 +91,7 @@ const AdminDashboard = () => {
                 {/* Background Pattern/Image Overlay */}
                 <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
                     <img 
-                        src="/ecommerce_dashboard_bg_1773158716008.png" 
+                        src={getImageUrl('/curryleaf-logo.jpeg')}
                         alt="" 
                         className="w-full h-full object-cover grayscale"
                     />
@@ -223,12 +224,11 @@ const AdminDashboard = () => {
                                                 <div className="flex items-center">
                                                     <div className="h-12 w-12 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
                                                         <img 
-                                                            src={product.image_path ? `/${product.image_path}` : 'https://via.placeholder.com/50'} 
+                                                            src={getImageUrl(product.image_path)}
                                                             alt="" 
                                                             className="h-full w-full object-cover"
                                                             onError={(e) => {
-                                                                const filename = product.image_path.split('/').pop();
-                                                                e.target.src = `/uploads/${filename}`;
+                                                                e.currentTarget.src = getImageUrl();
                                                             }}
                                                         />
                                                     </div>
@@ -282,12 +282,11 @@ const AdminDashboard = () => {
                                         <div className="flex items-center">
                                             <div className="h-14 w-14 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
                                                 <img 
-                                                    src={product.image_path ? `/${product.image_path}` : 'https://via.placeholder.com/50'} 
+                                                    src={getImageUrl(product.image_path)}
                                                     alt="" 
                                                     className="h-full w-full object-cover"
                                                     onError={(e) => {
-                                                        const filename = product.image_path.split('/').pop();
-                                                        e.target.src = `/uploads/${filename}`;
+                                                        e.currentTarget.src = getImageUrl();
                                                     }}
                                                 />
                                             </div>

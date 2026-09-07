@@ -4,6 +4,7 @@ import { productApi } from '../api/productApi';
 import { cartApi } from '../api/cartApi';
 import { ShoppingCart, ArrowLeft, Loader2, Package, Heart, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { getImageUrl } from '../utils/imageUrl';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -71,14 +72,10 @@ const ProductDetails = () => {
                     <div className="bg-[#f7eee2] p-8 md:p-12 flex items-center justify-center border-r border-stone-100">
                         <div className="relative group w-full aspect-square max-w-md">
                             <img
-                                src={product.image_path ? `/${product.image_path}` : 'https://via.placeholder.com/600?text=No+Image'}
+                                src={getImageUrl(product.image_path)}
                                 alt={product.name}
                                 className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
-                                onError={(e) => {
-                                    // Fallback for path resolution if proxied path fails
-                                    const filename = product.image_path.split('/').pop();
-                                    e.target.src = `/uploads/${filename}`;
-                                }}
+                                onError={(e) => { e.currentTarget.src = getImageUrl(); }}
                             />
                             <div className="absolute top-4 right-4">
                                 <span className="bg-white/80 backdrop-blur px-4 py-1.5 rounded-full text-xs font-black text-gray-900 uppercase tracking-widest shadow-sm border border-gray-100">

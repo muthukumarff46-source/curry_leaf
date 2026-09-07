@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ShoppingCart, LogOut, User, Search, Menu, X } from 'lucide-react';
 import { cartApi } from '../api/cartApi';
+import { getImageUrl } from '../utils/imageUrl';
 
 const Navbar = () => {
     const { user, isAdmin, logout } = useAuth();
@@ -43,7 +44,7 @@ const Navbar = () => {
                 <div className="flex min-w-0 items-center justify-between h-[76px] gap-3">
                     <div className="flex min-w-0 flex-1 items-center">
                         <Link to="/" className="flex min-w-0 flex-shrink-0 items-center group transition-all" aria-label="Curryleaf Essential home">
-                            <span className="h-14 w-24 overflow-hidden flex items-center justify-center"><img src="/curryleaf-logo.jpeg" alt="CurryLeaf Essential" className="h-24 w-24 max-w-none object-contain mix-blend-multiply scale-125" /></span>
+                            <span className="h-14 w-24 overflow-hidden flex items-center justify-center"><img src={getImageUrl('/curryleaf-logo.jpeg')} alt="CurryLeaf Essential" className="h-24 w-24 max-w-none object-contain mix-blend-multiply scale-125" /></span>
                             <span className="ml-2 hidden xl:block text-xs font-bold text-stone-500 brand-sans whitespace-nowrap">Natural pantry essentials</span>
                         </Link>
                         <div className="hidden lg:flex ml-auto mr-auto items-center gap-5 brand-sans text-[10px] font-bold text-stone-600">

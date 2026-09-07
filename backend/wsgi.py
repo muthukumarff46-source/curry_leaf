@@ -35,10 +35,7 @@ def create_app():
     @app.route('/uploads/<path:filename>')
     def uploaded_file(filename):
         from flask import send_from_directory
-        # Extract just the filename if it's a full path
-        clean_filename = filename.split('/')[-1]
-        upload_dir = os.path.join(app.root_path, 'app', 'uploads')
-        return send_from_directory(upload_dir, clean_filename)
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
     return app
 

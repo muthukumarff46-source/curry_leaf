@@ -1,19 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Heart, Star } from 'lucide-react';
+import { getImageUrl } from '../utils/imageUrl';
 
 const ProductCard = ({ product, addToCart }) => {
     return (
         <div className="group bg-white rounded-2xl shadow-[0_5px_24px_rgba(75,38,22,0.06)] hover:shadow-[0_15px_35px_rgba(75,38,22,0.12)] transition-all duration-500 overflow-hidden border border-stone-100 flex flex-col h-full">
             <Link to={`/product/${product._id}`} className="relative aspect-square overflow-hidden bg-[#f7eee2] flex items-center justify-center p-5">
                 <img
-                    src={product.image_path ? `/${product.image_path}` : '/curryleaf-logo.jpeg'}
+                    src={getImageUrl(product.image_path)}
                     alt={product.name}
                     className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700"
-                    onError={(e) => {
-                        const filename = product.image_path.split('/').pop();
-                        e.target.src = `/uploads/${filename}`;
-                    }}
+                    onError={(e) => { e.currentTarget.src = getImageUrl(); }}
                 />
                 <div className="absolute top-4 left-4">
                         <span className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[9px] font-bold text-primary-700 uppercase tracking-wider shadow-sm">
