@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { productApi } from '../api/productApi';
 import { cartApi } from '../api/cartApi';
 import ProductCard from '../components/ProductCard';
-import { Search, Loader2 } from 'lucide-react';
+import { Search, Loader2, ArrowRight, Leaf, ShieldCheck, Truck, Sparkles, Heart, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -58,67 +58,34 @@ const Home = () => {
         </div>
     );
 
+    const categoryNames = ['Pressure Cookers', 'Cooker Combos', 'Everyday Cookers', 'Kitchen Essentials'];
+    const benefits = [{ icon: Leaf, title: '100% Natural', desc: 'No additives' }, { icon: Sparkles, title: 'Premium Quality', desc: 'Handpicked spices' }, { icon: ShieldCheck, title: 'Hygienically Packed', desc: 'Sealed for freshness' }, { icon: Truck, title: 'Fast Delivery', desc: 'Across India' }];
+    const featuredImages = ['/backend/app/uploads/img3.png', '/backend/app/uploads/img4.png', '/backend/app/uploads/img2.png', '/backend/app/uploads/img1.jpg'];
+
     return (
-        <div className="space-y-12 animate-in fade-in duration-700">
-            {/* Hero Section */}
-            <div className="relative bg-white p-10 md:p-16 rounded-[3rem] shadow-xl shadow-gray-100/50 border border-gray-50 overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary-50 rounded-full -mr-32 -mt-32 blur-3xl opacity-50" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-50 rounded-full -ml-32 -mb-32 blur-3xl opacity-50" />
-                
-                <div className="relative flex flex-col md:flex-row justify-between items-center gap-10">
-                    <div className="text-center md:text-left space-y-4 max-w-xl">
-                        <h1 className="text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
-                            Elevate Your <span className="text-primary-600">Lifestyle</span>
-                        </h1>
-                        <p className="text-lg text-gray-500 font-medium leading-relaxed">
-                            Discover our handpicked collection of premium products, designed for those who appreciate the finer details.
-                        </p>
-                    </div>
-                    
-                    <div className="relative w-full md:w-96 group">
-                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <Search className="h-5 w-5 text-gray-400 group-focus-within:text-primary-600 transition-colors" />
-                        </div>
-                        <input
-                            type="text"
-                            className="block w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-primary-100 focus:bg-white transition-all font-bold shadow-sm"
-                            placeholder="Find your next favorite..."
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
+        <div className="space-y-20 pb-8 fade-up">
+            <section className="relative overflow-hidden rounded-[2rem] bg-[#f7eee2] min-h-[520px] flex items-center">
+                <div className="leaf-pattern absolute inset-0" />
+                <div className="relative z-10 px-7 py-16 md:px-16 max-w-2xl">
+                    <p className="brand-sans text-primary-600 text-xs font-bold mb-6">The goodness of nature, packed for you</p>
+                    <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.98] text-[#292521]">Pure Spices.<br /><span className="text-primary-600 italic font-normal">Pure Love.</span></h1>
+                    <p className="mt-7 text-lg leading-8 text-stone-600 max-w-lg">Bringing you 100% natural, handpicked spices and essential products for a healthier you.</p>
+                    <div className="mt-9 flex flex-wrap gap-3"><button onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })} className="bg-primary-600 hover:bg-primary-700 text-white px-7 py-3.5 rounded-full font-bold shadow-lg shadow-primary-900/20 transition-all">Shop Now <ArrowRight className="inline ml-2 h-4 w-4" /></button><button onClick={() => document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' })} className="border border-stone-300 text-stone-700 px-7 py-3.5 rounded-full font-bold hover:border-primary-600 hover:text-primary-600 transition-all">Explore Products</button></div>
                 </div>
-            </div>
+                <div className="absolute right-[-8%] bottom-[-8%] w-[58%] h-[90%] hidden md:block"><div className="absolute inset-10 rounded-full bg-[#ead5b7]" />{featuredImages.map((image, index) => <img key={image} src={image} alt={index === 0 ? 'Premium almonds' : 'Fresh black pepper'} className={`absolute object-cover rounded-[2rem] drop-shadow-2xl float-product ${index === 0 ? 'w-64 h-72 left-16 top-16 z-20' : 'w-52 h-60 right-4 top-5 z-10'}`} style={{ animationDelay: `${index * 0.7}s` }} />)}</div>
+            </section>
 
-            {/* Products Grid */}
-            <div className="space-y-8">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-black text-gray-900 tracking-tight">Trending Collection</h2>
-                    <div className="h-px flex-grow bg-gray-100 mx-8 hidden md:block" />
-                    <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">
-                        {filteredProducts.length} items
-                    </span>
-                </div>
+            <section className="relative -mt-10 mx-3 md:mx-10 bg-white rounded-2xl shadow-[0_10px_40px_rgba(75,38,22,0.1)] border border-stone-100 grid grid-cols-2 md:grid-cols-4 divide-x divide-stone-100">
+                {benefits.map(({ icon: Icon, title, desc }) => <div key={title} className="p-5 md:p-7 flex items-center gap-3"><Icon className="h-7 w-7 text-primary-600 shrink-0" strokeWidth={1.5} /><div><h3 className="font-bold text-sm text-stone-800">{title}</h3><p className="text-xs text-stone-500 mt-1">{desc}</p></div></div>)}
+            </section>
 
-                {filteredProducts.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {filteredProducts.map(product => (
-                            <ProductCard 
-                                key={product._id} 
-                                product={product} 
-                                addToCart={handleAddToCart} 
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-32 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
-                        <div className="bg-white p-4 rounded-2xl inline-block shadow-sm mb-4">
-                            <Search className="h-10 w-10 text-gray-300" />
-                        </div>
-                        <h3 className="text-xl font-black text-gray-900 mb-2">No matching pieces found</h3>
-                        <p className="text-gray-500 font-medium">Try a different search term or category.</p>
-                    </div>
-                )}
-            </div>
+            <section id="categories"><div className="flex items-end justify-between mb-8"><div><p className="brand-sans text-primary-600 text-xs font-bold mb-2">Find your everyday favourites</p><h2 className="text-3xl md:text-4xl font-black text-stone-800">Shop by Categories</h2></div><ArrowRight className="text-primary-600 h-6 w-6" /></div><div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">{categoryNames.map((name, index) => { const product = products[index % Math.max(products.length, 1)]; const categoryImage = featuredImages[index % featuredImages.length]; return <button key={name} onClick={() => setSearchTerm(name.split(' ')[0])} className="group text-left"><div className="aspect-square rounded-2xl bg-[#f7eee2] overflow-hidden p-3 mb-3 border border-transparent group-hover:border-primary-200 transition-all"><img src={product?.image_path ? `/${product.image_path}` : categoryImage} alt={name} className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-500" /></div><p className="text-sm font-bold text-stone-700 group-hover:text-primary-600 transition-colors">{name}</p></button>; })}</div></section>
+
+            <section id="products"><div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8"><div><p className="brand-sans text-primary-600 text-xs font-bold mb-2">Chosen by our community</p><h2 className="text-3xl md:text-4xl font-black text-stone-800">Best Selling Products</h2></div><div className="flex items-center gap-4"><div className="relative"><Search className="absolute left-3 top-3 h-4 w-4 text-stone-400" /><input className="w-52 pl-9 pr-3 py-2.5 rounded-full border border-stone-200 text-sm outline-none focus:border-primary-500" placeholder="Search products" onChange={(e) => setSearchTerm(e.target.value)} /></div><span className="hidden md:block text-sm font-bold text-primary-600 whitespace-nowrap">View All Products <ArrowRight className="inline h-4 w-4" /></span></div></div>{filteredProducts.length > 0 ? <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">{filteredProducts.slice(0, 8).map(product => <ProductCard key={product._id} product={product} addToCart={handleAddToCart} />)}</div> : <div className="text-center py-24 bg-[#f7eee2] rounded-3xl"><Search className="mx-auto h-10 w-10 text-stone-400 mb-4" /><h3 className="text-xl font-bold text-stone-800">No products found</h3><p className="text-stone-500 mt-2">Try a different search term.</p></div>}</section>
+
+            <section className="rounded-[2rem] overflow-hidden bg-[#722c25] text-white grid md:grid-cols-2 min-h-[330px]"><div className="p-9 md:p-14 flex flex-col justify-center"><p className="brand-sans text-primary-200 text-xs font-bold mb-4">Goodness, bundled together</p><h2 className="text-4xl md:text-5xl font-black">Combo Offers</h2><p className="mt-4 text-primary-100 text-lg">Save More with Our Special Combos</p><button onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })} className="mt-8 w-fit bg-white text-primary-700 px-6 py-3 rounded-full font-bold hover:bg-primary-50 transition-colors">Shop Combos <ArrowRight className="inline ml-2 h-4 w-4" /></button></div><div className="bg-[#8f4b36] relative min-h-[260px]"><div className="absolute inset-0 leaf-pattern opacity-20" /><img src={featuredImages[1]} alt="Fresh black pepper for CurryLeaf combo" className="absolute inset-0 w-full h-full object-cover p-10 float-product" /></div></section>
+
+            <section className="grid md:grid-cols-2 gap-12 items-center"><div className="rounded-[2rem] bg-[#e6eee1] p-10 min-h-[280px] relative overflow-hidden"><Leaf className="absolute -right-8 -bottom-8 h-52 w-52 text-[#b8cbaa] rotate-12" strokeWidth={0.7} /><div className="relative"><p className="brand-sans text-[#50744b] text-xs font-bold mb-3">From our farms to your kitchen</p><h2 className="text-3xl md:text-4xl font-black text-stone-800">Why Choose<br /><span className="text-[#50744b]">CurryLeaf?</span></h2></div></div><div className="space-y-4">{['100% Natural & Pure', 'No Artificial Colors or Flavors', 'Sourced from Trusted Farms', 'Hygienically Packed', 'Loved by Thousands of Customers'].map(point => <div key={point} className="flex items-center gap-4 border-b border-stone-100 pb-4"><span className="h-6 w-6 rounded-full bg-[#e6eee1] text-[#50744b] flex items-center justify-center font-bold">✓</span><span className="font-bold text-stone-700">{point}</span></div>)}</div></section>
         </div>
     );
 };

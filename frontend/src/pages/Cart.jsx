@@ -83,13 +83,13 @@ const Cart = () => {
                 </div>
                 <div className="bg-gray-50 px-6 py-3 rounded-2xl border border-gray-100 shadow-sm">
                     <span className="text-sm font-bold text-gray-400 uppercase tracking-widest mr-2">Subtotal:</span>
-                    <span className="text-2xl font-black text-primary-600">${cart.total_price.toFixed(2)}</span>
+                    <span className="text-2xl font-black text-primary-600">₹{cart.total_price.toFixed(0)}</span>
                 </div>
             </header>
 
             <div className="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start">
                 <div className="lg:col-span-8 space-y-6">
-                    <div className="bg-white rounded-[2.5rem] shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+                    <div className="bg-white rounded-[2rem] shadow-xl shadow-stone-200/50 border border-stone-100 overflow-hidden">
                         <ul role="list" className="divide-y divide-gray-50">
                             {cart.items.map((item) => (
                                 <CartItem 
@@ -117,7 +117,7 @@ const Cart = () => {
                         <div className="space-y-4">
                             <div className="flex items-center justify-between text-sm font-bold">
                                 <span className="text-gray-400 uppercase tracking-wider">Subtotal</span>
-                                <span className="text-gray-900">${cart.total_price.toFixed(2)}</span>
+                                <span className="text-gray-900">₹{cart.total_price.toFixed(0)}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm font-bold">
                                 <span className="text-gray-400 uppercase tracking-wider">Shipping</span>
@@ -125,7 +125,7 @@ const Cart = () => {
                             </div>
                             <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                                 <span className="text-xl font-black text-gray-900">Total</span>
-                                <span className="text-2xl font-black text-primary-600">${cart.total_price.toFixed(2)}</span>
+                                <span className="text-2xl font-black text-primary-600">₹{cart.total_price.toFixed(0)}</span>
                             </div>
                         </div>
 

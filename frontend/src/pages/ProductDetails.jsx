@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { productApi } from '../api/productApi';
 import { cartApi } from '../api/cartApi';
-import { ShoppingCart, ArrowLeft, Loader2, Package } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Loader2, Package, Heart, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const ProductDetails = () => {
@@ -56,7 +56,7 @@ const ProductDetails = () => {
     if (!product) return <div className="text-center py-10">Product not found</div>;
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-500">
+        <div className="max-w-6xl mx-auto space-y-8 fade-up">
             <button 
                 onClick={() => navigate(-1)}
                 className="flex items-center text-gray-500 hover:text-primary-600 font-bold transition-colors group"
@@ -65,10 +65,10 @@ const ProductDetails = () => {
                 Back to Collection
             </button>
 
-            <div className="bg-white rounded-[2.5rem] shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-[2rem] shadow-xl shadow-stone-200/50 border border-stone-100 overflow-hidden">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-12">
                     {/* Image Section */}
-                    <div className="bg-gray-50 p-8 md:p-12 flex items-center justify-center border-r border-gray-50">
+                    <div className="bg-[#f7eee2] p-8 md:p-12 flex items-center justify-center border-r border-stone-100">
                         <div className="relative group w-full aspect-square max-w-md">
                             <img
                                 src={product.image_path ? `/${product.image_path}` : 'https://via.placeholder.com/600?text=No+Image'}
@@ -92,13 +92,14 @@ const ProductDetails = () => {
                     <div className="p-8 md:p-12 flex flex-col justify-center">
                         <div className="space-y-6">
                             <div>
-                                <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight mb-4">
+                                <h1 className="text-4xl md:text-5xl font-black text-stone-800 tracking-tight leading-tight mb-4">
                                     {product.name}
                                 </h1>
                                 <div className="flex items-center space-x-4">
                                     <span className="text-4xl font-black text-primary-600">
-                                        ${product.price?.toFixed(2)}
+                                        ₹{product.price?.toFixed(0)}
                                     </span>
+                                    <span className="text-sm text-stone-400 line-through">MRP ₹{(product.price * 1.2)?.toFixed(0)}</span>
                                     {product.stock_quantity > 0 ? (
                                         <span className="inline-flex items-center text-sm font-bold text-green-600 bg-green-50 px-3 py-1 rounded-lg">
                                             <div className="h-1.5 w-1.5 rounded-full bg-green-600 mr-2 animate-pulse" />
@@ -110,13 +111,15 @@ const ProductDetails = () => {
                                 </div>
                             </div>
 
-                            <div className="prose prose-sm text-gray-500 max-w-none">
+                            <div className="flex items-center gap-2 text-sm text-stone-600"><span className="flex items-center bg-[#c99b3b] text-white px-2 py-1 rounded"><Star className="h-3 w-3 fill-white mr-1" /> 4.8</span> 24 verified reviews</div>
+                            <div className="prose prose-sm text-stone-500 max-w-none">
                                 <p className="leading-relaxed text-lg font-medium">
                                     {product.description}
                                 </p>
                             </div>
 
-                            <div className="pt-8 border-t border-gray-100 space-y-4">
+                            <div className="pt-6 border-t border-stone-100 space-y-4">
+                                <div><p className="brand-sans text-[10px] font-bold text-stone-500 mb-2">Choose weight</p><div className="flex gap-2"><button className="border-2 border-primary-600 text-primary-700 px-4 py-2 rounded-lg text-sm font-bold">200g</button><button className="border border-stone-200 text-stone-600 px-4 py-2 rounded-lg text-sm font-bold">500g</button><button className="border border-stone-200 text-stone-600 px-4 py-2 rounded-lg text-sm font-bold">1kg</button></div></div>
                                 <div className="flex items-center space-x-4">
                                     {!isAdmin && product.stock_quantity > 0 && (
                                         <div className="flex items-center border border-gray-200 rounded-2xl bg-gray-50 p-1">
@@ -138,7 +141,7 @@ const ProductDetails = () => {
                                     <button
                                         disabled={adding || product.stock_quantity === 0 || isAdmin}
                                         onClick={handleAddToCart}
-                                        className="flex-grow flex items-center justify-center bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 text-white py-4 px-8 rounded-2xl font-black text-lg shadow-xl shadow-primary-100 transition-all active:scale-[0.98] group"
+                                        className="flex-grow flex items-center justify-center bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 text-white py-4 px-8 rounded-xl font-black text-lg shadow-xl shadow-primary-100 transition-all active:scale-[0.98] group"
                                     >
                                         {adding ? <Loader2 className="h-6 w-6 animate-spin text-white" /> : (
                                             <>
@@ -148,9 +151,7 @@ const ProductDetails = () => {
                                         )}
                                     </button>
                                 </div>
-                                <p className="text-xs text-gray-400 font-bold text-center">
-                                    Secure checkout & Free shipping on premium orders
-                                </p>
+                                <div className="flex items-center justify-center gap-3"><button className="p-3 border border-stone-200 rounded-xl text-stone-500 hover:text-primary-600" title="Add to wishlist"><Heart className="h-5 w-5" /></button><button onClick={handleAddToCart} className="flex-1 border border-primary-600 text-primary-700 py-3 rounded-xl font-bold">Buy Now</button></div><p className="text-xs text-stone-400 font-bold text-center">Secure checkout &amp; free shipping above ₹499</p>
                             </div>
                         </div>
                     </div>
